@@ -1,0 +1,45 @@
+pipeline
+{
+    agent any
+    stages
+    {
+    stage('conTinous Download')
+    {
+        steps
+        {
+            git 'https://github.com/Shrinivasc/maven.git'
+        }
+    }
+    stage('conTinous Buid')
+    {
+        steps
+        {
+            sh 'mvn package'
+        }
+    }
+    stage('continuous deployment')
+    {
+        steps
+        {
+            deploy adapters: [tomcat9(credentialsId: '60c0158a-8137-4f72-b429-9896237fec53', path: '', url: 'http://172.31.16.165:8080')], contextPath: 'finger', war: '**/*.war'
+        }
+    }
+    stage('continuous testing')
+    {
+        steps
+        {
+           git 'https://github.com/Shrinivasc/AutomationTesting.git'
+          sh 'java -jar /home/ubuntu/.jenkins/workspace/declarative/testing.jar' 
+           
+        }
+    }
+    stage('continous delivery')
+    {
+        steps
+        {
+            input message:'NEED APROVAL FROM DELIVARY MANAGER!',submitter:'Nikhil'
+            deploy adapters: [tomcat9(credentialsId: 'c8296e88-8039-498d-96e1-7ae3342bd6e4', path: '', url: 'http://172.31.26.105:8080')], contextPath: 'leg', war: '**/*.war'
+        }
+    }
+    }
+}

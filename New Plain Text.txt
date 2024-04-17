@@ -1,0 +1,34 @@
+SCRIPTED PIPELINE 
+
+node('built-in')
+{
+  stage('continuous download')
+  {
+    git url
+}
+}
+
+DECLARATIVE PIPELINE
+
+pipeline
+{
+  agent any 
+  stages
+  {
+   stage ('continous download')
+   {
+    steps
+    {
+      git url
+}
+  steps
+  {
+    hjfhjhfekfieifi
+}
+  steps
+   { 
+     hufhjyfijhfiuif
+ }
+}
+}
+}
